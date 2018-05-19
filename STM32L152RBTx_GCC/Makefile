@@ -30,6 +30,7 @@ INCLUDES = -I../STM32L152RBTx_MDK/Inc \
 ELF = $(BUILDDIR)/program.elf
 HEX = $(BUILDDIR)/program.hex
 BIN = $(BUILDDIR)/program.bin
+LIB = $(BUILDDIR)/libprogram.a
 
 CC = compiler/bin/arm-none-eabi-gcc
 LD = compiler/bin/arm-none-eabi-gcc
@@ -50,7 +51,7 @@ define run_compile
 	$(CC) -c $(CFLAGS) $< -o $(call to_output_path,$@)
 endef
 
-all: clean $(HEX)
+all: clean $(LIB)
 
 $(HEX): $(ELF) $(BIN)
 	$(OBJCOPY) -O ihex $< $@
@@ -61,6 +62,9 @@ $(BIN): $(ELF)
 $(ELF): $(OBJECTS)
 	$(LD) $(LDFLAGS) -o $@ $(call to_output_path,$(OBJECTS))
 	$(SZ) --format=berkeley $@
+	
+$(LIB): $(OBJECTS)
+	$(AR) -r $@ $(call to_output_path,$(OBJECTS))
 
 $(BUILDDIR)/%.o: %.c
 	$(run_compile)
