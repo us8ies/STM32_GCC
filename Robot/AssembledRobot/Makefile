@@ -1,7 +1,7 @@
 BUILDDIR = build
 
 ARCHIVES =  ../Platform/build/lib_platform.a \
-			../Application1/build/lib_appliction1.a
+			../Application2/build/lib_unit_tests.a
 
 ELF = $(BUILDDIR)/program.elf
 HEX = $(BUILDDIR)/program.hex
