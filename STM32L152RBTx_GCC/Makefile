@@ -51,7 +51,7 @@ define run_compile
 	$(CC) -c $(CFLAGS) $< -o $(call to_output_path,$@)
 endef
 
-all: clean $(LIB)
+all: clean $(HEX)
 
 $(HEX): $(ELF) $(BIN)
 	$(OBJCOPY) -O ihex $< $@
