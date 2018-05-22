@@ -36,7 +36,7 @@ AR = ../../STM32L152RBTx_GCC/compiler/bin/arm-none-eabi-ar
 
 CFLAGS  = -O0 -g -Wall -I.\
 		-mcpu=cortex-m3 -mthumb \
-		$(INCLUDES) -DUSE_HAL_DRIVER -DSTM32L152xB -D__MICROLIB -D_RTE_
+		$(INCLUDES) -DUSE_HAL_DRIVER -DSTM32L152xB -D__MICROLIB -D_RTE_ -ffunction-sections -fdata-sections
 
 to_output_path = $(subst ../,up/,$(1))
 

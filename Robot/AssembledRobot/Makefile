@@ -16,7 +16,7 @@ OBJCOPY = ../../STM32L152RBTx_GCC/compiler/bin/arm-none-eabi-objcopy
 SZ      = ../../STM32L152RBTx_GCC/compiler/bin/arm-none-eabi-size
 
 LDSCRIPT = ../../STM32L152RBTx_GCC/gcc_startup_linker/gcc.ld
-LDFLAGS += -T$(LDSCRIPT) -mthumb -mcpu=cortex-m3 -specs=nano.specs -specs=nosys.specs
+LDFLAGS += -T$(LDSCRIPT) -mthumb -mcpu=cortex-m3 -specs=nano.specs -specs=nosys.specs -ffunction-sections -fdata-sections -Wl,--gc-sections
 
 to_output_path = $(BUILDDIR)/$(subst ../,up/,$(1))
 
