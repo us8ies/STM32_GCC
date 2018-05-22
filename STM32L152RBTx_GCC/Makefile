@@ -40,10 +40,10 @@ OBJCOPY = compiler/bin/arm-none-eabi-objcopy
 
 CFLAGS  = -O0 -g -Wall -I.\
 		-mcpu=cortex-m3 -mthumb \
-		$(INCLUDES) -DUSE_HAL_DRIVER -DSTM32L152xB -D__MICROLIB -D_RTE_
+		$(INCLUDES) -DUSE_HAL_DRIVER -DSTM32L152xB -D__MICROLIB -D_RTE_ -ffunction-sections -fdata-sections
 
 LDSCRIPT = gcc_startup_linker/gcc.ld
-LDFLAGS += -T$(LDSCRIPT) -mthumb -mcpu=cortex-m3 -specs=nano.specs -specs=nosys.specs
+LDFLAGS += -T$(LDSCRIPT) -mthumb -mcpu=cortex-m3 -specs=nano.specs -specs=nosys.specs -ffunction-sections -fdata-sections -Wl,--gc-sections
 
 to_output_path = $(subst ../,up/,$(1))
 
@@ -68,7 +68,7 @@ $(BUILDDIR)/%.o: %.c
 
 $(BUILDDIR)/%.o: %.s
 	mkdir -p $(dir $(call to_output_path,$@))	
-	$(CC) -x assembler-with-cpp -c $(CFLAGS) $< -o $(call to_output_path,$@)
+	$(CC) -x assembler-with-cpp -c $(CFLAGS) -ffunction-sections -fdata-sections -Wl,--gc-sections $< -o $(call to_output_path,$@)
 
 flash: $(BIN)
 	st-flash write $(BIN) 0x8000000
