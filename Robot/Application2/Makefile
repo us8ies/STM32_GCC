@@ -18,13 +18,9 @@ AR = ../../STM32L152RBTx_GCC/compiler/bin/arm-none-eabi-ar
 
 CFLAGS  = -O0 -g -Wall -I.\
 		-mcpu=cortex-m3 -mthumb \
-		$(INCLUDES) -DUSE_HAL_DRIVER -DSTM32L152xB -D__MICROLIB -D_RTE_
+		$(INCLUDES) -DUSE_HAL_DRIVER -DSTM32L152xB -D__MICROLIB -D_RTE_ -DNULL=0
 
 to_output_path = $(subst ../,up/,$(1))
-define run_compile 
-	mkdir -p $(dir $(call to_output_path,$@))	
-	$(CC) -c $(CFLAGS) $< -o $(call to_output_path,$@) -DNULL=0
-endef
 
 all: clean $(LIB)
 
@@ -32,10 +28,12 @@ $(LIB): $(OBJECTS)
 	$(AR) -crs $@ $(call to_output_path,$(OBJECTS))
 
 $(BUILDDIR)/%.o: %.c
-	$(run_compile)
+	mkdir -p $(dir $(call to_output_path,$@))	
+	$(CC) -c $(CFLAGS) $< -o $(call to_output_path,$@)
 
 $(BUILDDIR)/%.o: %.s
-	$(run_compile)
+	mkdir -p $(dir $(call to_output_path,$@))	
+	$(CC) -x assembler-with-cpp -c $(CFLAGS) $< -o $(call to_output_path,$@)
 
 clean:
 	rm -rf build
