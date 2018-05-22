@@ -17,7 +17,7 @@ SOURCES = \
 			STM32L152RBTx_MDK/Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_dma.c \
 			STM32L152RBTx_MDK/Src/stm32l1xx_it.c \
 			STM32L152RBTx_MDK/Src/system_stm32l1xx.c \
-			../../STM32L152RBTx_GCC/startup.s \
+			../../STM32L152RBTx_GCC/gcc_startup_linker/startup_ARMCM3.S \
 
 OBJECTS = $(addprefix $(BUILDDIR)/, $(addsuffix .o, $(basename $(SOURCES))))
 

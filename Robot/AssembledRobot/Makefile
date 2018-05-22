@@ -1,7 +1,7 @@
 BUILDDIR = build
 
-#ARCHIVES =  ../Platform/build/lib_platform.a ../Application2/build/lib_unit_tests.a
-ARCHIVES =  ../Platform/build/lib_platform.a ../Application1/build/lib_appliction1.a
+ARCHIVES =  ../Platform/build/lib_platform.a ../Application2/build/lib_unit_tests.a
+#ARCHIVES =  ../Platform/build/lib_platform.a ../Application1/build/lib_appliction1.a
 
 ELF = $(BUILDDIR)/program.elf
 HEX = $(BUILDDIR)/program.hex
@@ -15,7 +15,7 @@ AR      = ../../STM32L152RBTx_GCC/compiler/bin/arm-none-eabi-ar
 OBJCOPY = ../../STM32L152RBTx_GCC/compiler/bin/arm-none-eabi-objcopy
 SZ      = ../../STM32L152RBTx_GCC/compiler/bin/arm-none-eabi-size
 
-LDSCRIPT = linker_script.ld
+LDSCRIPT = ../../STM32L152RBTx_GCC/gcc_startup_linker/gcc.ld
 LDFLAGS += -T$(LDSCRIPT) -mthumb -mcpu=cortex-m3 -specs=nano.specs -specs=nosys.specs
 
 to_output_path = $(BUILDDIR)/$(subst ../,up/,$(1))
