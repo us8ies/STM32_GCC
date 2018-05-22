@@ -20,7 +20,16 @@ void RunApplication(void)
 {
 	main2(0, 0);
 	
-	while(1);
+	uint16_t counter = 0u;
+	while(1)
+	{
+		Delay(1000);
+		char message[20] = {0};
+		
+		sprintf(message, "%d\r", counter++);
+		
+		Send((uint8_t *)message, 20);
+	}
 }
 
 int _write(int file, char *ptr, int len)
