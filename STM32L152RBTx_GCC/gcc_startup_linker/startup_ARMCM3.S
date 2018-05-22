@@ -55,6 +55,9 @@ __StackTop:
 #else
 	.equ	Heap_Size, 0
 #endif
+	/* BootRAM value is taken from startup_stm32l152xb.s provided by CubeMX */
+	.equ  BootRAM, 0xF108F85F
+
 	.globl	__HeapBase
 	.globl	__HeapLimit
 __HeapBase:
@@ -85,9 +88,75 @@ __isr_vector:
 	.long	0                     /* Reserved */
 	.long	PendSV_Handler        /* PendSV Handler */
 	.long	SysTick_Handler       /* SysTick Handler */
+	/* values below are taken from startup_stm32l152xb.s provided by CubeMX */
+	.long	WWDG_IRQHandler
+	.long	PVD_IRQHandler
+	.long	TAMPER_STAMP_IRQHandler
+	.long	RTC_WKUP_IRQHandler
+	.long	FLASH_IRQHandler
+	.long	RCC_IRQHandler
+	.long	EXTI0_IRQHandler
+	.long	EXTI1_IRQHandler
+	.long	EXTI2_IRQHandler
+	.long	EXTI3_IRQHandler
+	.long	EXTI4_IRQHandler
+	.long	DMA1_Channel1_IRQHandler
+	.long	DMA1_Channel2_IRQHandler
+	.long	DMA1_Channel3_IRQHandler
+	.long	DMA1_Channel4_IRQHandler
+	.long	DMA1_Channel5_IRQHandler
+	.long	DMA1_Channel6_IRQHandler
+	.long	DMA1_Channel7_IRQHandler
+	.long	ADC1_IRQHandler
+	.long	USB_HP_IRQHandler
+	.long	USB_LP_IRQHandler
+	.long	DAC_IRQHandler
+	.long	COMP_IRQHandler
+	.long	EXTI9_5_IRQHandler
+	.long	LCD_IRQHandler  
+	.long	TIM9_IRQHandler
+	.long	TIM10_IRQHandler
+	.long	TIM11_IRQHandler
+	.long	TIM2_IRQHandler
+	.long	TIM3_IRQHandler
+	.long	TIM4_IRQHandler
+	.long	I2C1_EV_IRQHandler
+	.long	I2C1_ER_IRQHandler
+	.long	I2C2_EV_IRQHandler
+	.long	I2C2_ER_IRQHandler
+	.long	SPI1_IRQHandler
+	.long	SPI2_IRQHandler
+	.long	USART1_IRQHandler
+	.long	USART2_IRQHandler
+	.long	USART3_IRQHandler
+	.long	EXTI15_10_IRQHandler
+	.long	RTC_Alarm_IRQHandler
+	.long	USB_FS_WKUP_IRQHandler
+	.long	TIM6_IRQHandler
+	.long	TIM7_IRQHandler
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	0
+	.long	BootRAM          /* @0x108. This is for boot in RAM mode for 
+								STM32L152XB devices. */
 
 	/* External interrupts */
-	.long	Default_Handler
+	/* value below is not present in startup_stm32l152xb.s provided by CubeMX */
+	/* .long	Default_Handler */
 
 	.size	__isr_vector, . - __isr_vector
 
@@ -252,6 +321,53 @@ Default_Handler:
 	def_irq_handler	DebugMon_Handler
 	def_irq_handler	PendSV_Handler
 	def_irq_handler	SysTick_Handler
-	def_irq_handler	DEF_IRQHandler
+	/* this handler is not present in startup_stm32l152xb.s provided by CubeMX */
+	/* def_irq_handler	DEF_IRQHandler */
+	/* values below are taken from startup_stm32l152xb.s provided by CubeMX */
+	def_irq_handler WWDG_IRQHandler
+	def_irq_handler PVD_IRQHandler
+	def_irq_handler TAMPER_STAMP_IRQHandler
+	def_irq_handler RTC_WKUP_IRQHandler
+	def_irq_handler FLASH_IRQHandler
+	def_irq_handler RCC_IRQHandler
+	def_irq_handler EXTI0_IRQHandler
+	def_irq_handler EXTI1_IRQHandler
+	def_irq_handler EXTI2_IRQHandler
+	def_irq_handler EXTI3_IRQHandler
+	def_irq_handler EXTI4_IRQHandler
+	def_irq_handler DMA1_Channel1_IRQHandler
+	def_irq_handler DMA1_Channel2_IRQHandler
+	def_irq_handler DMA1_Channel3_IRQHandler
+	def_irq_handler DMA1_Channel4_IRQHandler
+	def_irq_handler DMA1_Channel5_IRQHandler
+	def_irq_handler DMA1_Channel6_IRQHandler
+	def_irq_handler DMA1_Channel7_IRQHandler
+	def_irq_handler ADC1_IRQHandler
+	def_irq_handler USB_HP_IRQHandler
+	def_irq_handler USB_LP_IRQHandler
+	def_irq_handler DAC_IRQHandler
+	def_irq_handler COMP_IRQHandler
+	def_irq_handler EXTI9_5_IRQHandler
+	def_irq_handler LCD_IRQHandler
+	def_irq_handler TIM9_IRQHandler
+	def_irq_handler TIM10_IRQHandler
+	def_irq_handler TIM11_IRQHandler
+	def_irq_handler TIM2_IRQHandler
+	def_irq_handler TIM3_IRQHandler
+	def_irq_handler TIM4_IRQHandler
+	def_irq_handler I2C1_EV_IRQHandler
+	def_irq_handler I2C1_ER_IRQHandler
+	def_irq_handler I2C2_EV_IRQHandler
+	def_irq_handler I2C2_ER_IRQHandler,
+	def_irq_handler SPI1_IRQHandler
+	def_irq_handler SPI2_IRQHandler
+	def_irq_handler USART1_IRQHandler
+	def_irq_handler USART2_IRQHandler
+	def_irq_handler USART3_IRQHandler
+	def_irq_handler EXTI15_10_IRQHandler
+	def_irq_handler RTC_Alarm_IRQHandler
+	def_irq_handler USB_FS_WKUP_IRQHandler
+	def_irq_handler TIM6_IRQHandler
+	def_irq_handler TIM7_IRQHandler
 
 	.end
