@@ -17,7 +17,7 @@ SOURCES = \
 			../STM32L152RBTx_MDK/Src/stm32l1xx_it.c \
 			../STM32L152RBTx_MDK/Src/system_stm32l1xx.c \
 			../STM32L152RBTx_MDK/Src/main.c \
-			startup.s
+			gcc_startup_linker/startup_ARMCM3.s
 
 OBJECTS = $(addprefix $(BUILDDIR)/, $(addsuffix .o, $(basename $(SOURCES))))
 
@@ -42,14 +42,10 @@ CFLAGS  = -O0 -g -Wall -I.\
 		-mcpu=cortex-m3 -mthumb \
 		$(INCLUDES) -DUSE_HAL_DRIVER -DSTM32L152xB -D__MICROLIB -D_RTE_
 
-LDSCRIPT = linker_script.ld
+LDSCRIPT = gcc_startup_linker/gcc.ld
 LDFLAGS += -T$(LDSCRIPT) -mthumb -mcpu=cortex-m3 -specs=nano.specs -specs=nosys.specs
 
 to_output_path = $(subst ../,up/,$(1))
-define run_compile 
-	mkdir -p $(dir $(call to_output_path,$@))	
-	$(CC) -c $(CFLAGS) $< -o $(call to_output_path,$@)
-endef
 
 all: clean $(HEX)
 
@@ -67,10 +63,12 @@ $(LIB): $(OBJECTS)
 	$(AR) -r $@ $(call to_output_path,$(OBJECTS))
 
 $(BUILDDIR)/%.o: %.c
-	$(run_compile)
+	mkdir -p $(dir $(call to_output_path,$@))	
+	$(CC) -c $(CFLAGS) $< -o $(call to_output_path,$@)
 
 $(BUILDDIR)/%.o: %.s
-	$(run_compile)
+	mkdir -p $(dir $(call to_output_path,$@))	
+	$(CC) -x assembler-with-cpp -c $(CFLAGS) $< -o $(call to_output_path,$@)
 
 flash: $(BIN)
 	st-flash write $(BIN) 0x8000000
